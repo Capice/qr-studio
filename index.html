@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>QR Studio Pro</title>
+    
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="Style/style.css">
+    
+    <script src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="Script/QRCode.js" defer></script>
+</head>
+<body>
+
+<h1 class="no-print">QR Generator</h1>
+
+<div class="no-print config-panel">
+    <div class="row">
+        <div class="col"><label>URLs (one per line)</label><textarea id="dataInput">https://google.com</textarea></div>
+        <div class="col"><label>Captions (one per line)</label><textarea id="captionInput">Tag 1</textarea></div>
+        <div class="col batch-box">
+            <label>Batch Generator</label>
+            <input type="text" id="batchPrefix" placeholder="Prefix">
+            <div class="row-inner">
+                <input type="number" id="batchStart" placeholder="Start">
+                <input type="number" id="batchEnd" placeholder="End">
+            </div>
+            <button id="btnBatch" class="btn-tiny">Load Sequence</button>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col"><label>Color Mode</label><select id="colorMode"><option value="bw">B&W</option><option value="gradient" selected>Gradient</option></select></div>
+        <div class="col"><label>Foreground 1</label><input type="color" id="color1" value="#1e293b"></div>
+        <div class="col"><label>Foreground 2</label><input type="color" id="color2" value="#3b82f6"></div>
+        <div class="col"><label>Background</label><input type="color" id="bgColor" value="#ffffff"></div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <label>Logo File</label>
+            <div class="logo-controls">
+                <input type="file" id="logoInput" accept="image/*">
+                <img id="logoPreview" alt="Preview">
+                <button id="btnClearLogo" class="btn-clear">X</button>
+            </div>
+        </div>
+        <div class="col"><label>Pattern Style</label>
+            <select id="dotStyle">
+                <option value="square">Square</option>
+                <option value="rounded" selected>Rounded</option>
+                <option value="extra-rounded">Extra-Rounded</option>
+                <option value="dots">Dots</option>
+                <option value="classy">Classy</option>
+            </select>
+        </div>
+        <div class="col"><label>ECL</label>
+            <select id="qrEcl"><option value="L">Low (7%)</option><option value="M">Med (15%)</option><option value="Q" selected>Quart (25%)</option><option value="H">High (30%)</option></select>
+        </div>
+        <div class="col"><label>Font</label>
+            <select id="captionFont"><option value="system-ui, sans-serif">Sans-Serif</option><option value="Georgia, serif">Serif</option><option value="monospace">Monospace</option></select>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col"><label>Eye Frame</label><select id="eyeFrameStyle"><option value="">Match Pattern</option><option value="square">Square</option><option value="rounded">Rounded</option></select></div>
+        <div class="col"><label>Eye Ball</label><select id="eyeBallStyle"><option value="">Match Pattern</option><option value="square">Square</option><option value="rounded">Rounded</option></select></div>
+        <div class="col"><label>Size (cm)</label><input type="number" id="sizeInput" step="0.1" value="3.5"></div>
+        <div class="col"><label>Border (px)</label><input type="number" id="borderWidth" value="1" min="0" max="20"></div>
+        <div class="col"><label>Padding (px)</label><input type="number" id="boxPadding" value="10"></div>
+        <div class="col"><label>Gap (px)</label><input type="number" id="labelGap" value="8"></div>
+    </div>
+
+    <div class="controls">
+        <button id="btnGenerate" class="btn-primary">Refresh</button>
+        <button id="btnPrintPDF" class="btn-success">Print PDF</button>
+        <button id="btnExportZip" class="btn-outline">ZIP</button>
+        <button id="btnReset" class="btn-danger">Reset</button>
+        <span style="flex-grow: 1;"></span>
+        <label><input type="checkbox" id="fillSheet" checked> Full Sheet</label>
+        <label><input type="checkbox" id="borderToggle" checked> Border</label>
+        <label><input type="checkbox" id="autoUpdate" checked> Auto</label>
+    </div>
+    <div class="version-tag">v1.0.1</div>
+</div>
+
+<div id="print-area"></div>
+
+</body>
+</html>
